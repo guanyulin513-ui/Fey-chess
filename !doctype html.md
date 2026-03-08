@@ -1,0 +1,256 @@
+<!doctype html>  
+<html lang="zh-Hant">  
+<html lang="zh-Hant">  
+<head>  
+  <meta charset="utf-8" />  
+  <meta charset="utf-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1" />  
+  <title>冠冠象棋</title>  
+  <title>冠冠象棋</title>  
+  <link rel="stylesheet" href="style.css" />  
+</head>  
+</head>  
+<body>  
+  <div id="app">  
+  <div id="app">  
+  
+    <!-- Modal -->  
+    <div id="modalOverlay" class="modalOverlay hidden" aria-hidden="true">  
+      <div id="modal" class="modal" role="dialog" aria-modal="true">  
+      <div id="modal" class="modal" role="dialog" aria-modal="true">  
+        <div class="modalHeader">  
+          <div id="modalTitle" class="modalTitle">提示</div>  
+        </div>  
+        </div>  
+        <div id="modalBody" class="modalBody"></div>  
+        <div id="modalBody" class="modalBody"></div>  
+        <div id="modalActions" class="modalActions"></div>  
+        <div id="modalActions" class="modalActions"></div>  
+      </div>  
+      </div>  
+    </div>  
+    </div>  
+  
+    <!-- Menu -->  
+    <!-- Menu -->  
+    <section id="menuScreen" class="screen">  
+    <section id="menuScreen" class="screen">  
+      <header class="header">  
+        <h1>冠冠象棋</h1>  
+        <h1>冠冠象棋</h1>  
+        <p class="sub">離線單機版（HTML/CSS/JS）</p>  
+      </header>  
+  
+      <div class="panel">  
+        <h2>1) 遊戲模式</h2>  
+        <div class="row">  
+          <label><input type="radio" name="mode" value="pvcpu" checked> 玩家 vs CPU</label>  
+          <label><input type="radio" name="mode" value="pvcpu" checked> 玩家 vs CPU</label>  
+          <label><input type="radio" name="mode" value="pvp"> 玩家 vs 玩家（雙人本機輪流）</label>  
+          <label><input type="radio" name="mode" value="pvp"> 玩家 vs 玩家（雙人本機輪流）</label>  
+        </div>  
+      </div>  
+      </div>  
+  
+      <div class="panel">  
+      <div class="panel">  
+        <h2>2) 棋盤模式</h2>  
+        <div class="row">  
+        <div class="row">  
+          <label><input type="radio" name="boardMode" value="big" checked> 大盤（中國象棋 9×10）</label>  
+          <label><input type="radio" name="boardMode" value="dark"> 小盤（台灣暗棋 4×8，32 子）</label>  
+          <label><input type="radio" name="boardMode" value="dark"> 小盤（台灣暗棋 4×8，32 子）</label>  
+        </div>  
+      </div>  
+      </div>  
+  
+      <div id="darkOptionsPanel" class="panel hidden">  
+        <h2>3) 暗棋選項（可遊戲中切換）</h2>  
+        <h2>3) 暗棋選項（可遊戲中切換）</h2>  
+        <div class="row">  
+        <div class="row">  
+          <label><input type="checkbox" id="optFogCapture" checked> 暗吃（可吃蓋牌）</label>  
+          <label><input type="checkbox" id="optFogCapture" checked> 暗吃（可吃蓋牌）</label>  
+          <label><input type="checkbox" id="optChainCapture" checked> 連吃（可連續吃子）</label>  
+        </div>  
+        <p class="hintText">  
+          依戲谷規則：標準暗棋只能吃明棋；暗棋連吃允許吃相鄰暗棋；連吃可隨時中止；炮/包連吃仍需隔子飛越。  [oai_citation:4‡darkchess.funtown.com.tw](https://darkchess.funtown.com.tw/rules2.html)  
+        </p>  
+        </p>  
+      </div>  
+  
+      <div id="cpuPanel" class="panel">  
+        <h2>4) CPU 等級</h2>  
+        <h2>4) CPU 等級</h2>  
+        <div class="row">  
+          <select id="cpuLevel">  
+          <select id="cpuLevel">  
+            <option value="normal">一般</option>  
+            <option value="normal">一般</option>  
+            <option value="medium">稍強</option>  
+            <option value="medium">稍強</option>  
+            <option value="strong">強勁</option>  
+            <option value="ultra">超強</option>  
+          </select>  
+          <span class="hintText">難度越高越強，骰子更容易出 6（CPU 方）。</span>  
+        </div>  
+        </div>  
+      </div>  
+      </div>  
+  
+      <div class="panel">  
+      <div class="panel">  
+        <h2>5) 先手/後手決定方式</h2>  
+        <h2>5) 先手/後手決定方式</h2>  
+        <div class="col">  
+        <div class="col">  
+          <label><input type="radio" name="firstMethod" value="manual" checked> 玩家自選先/後手（紅/黑）</label>  
+          <label><input type="radio" name="firstMethod" value="diceAuto"> 隨機決定（骰子）</label>  
+          <label><input type="radio" name="firstMethod" value="diceStop"> 隨機決定（骰子）— 玩家可選擇何時停骰</label>  
+          <label><input type="radio" name="firstMethod" value="diceStop"> 隨機決定（骰子）— 玩家可選擇何時停骰</label>  
+        </div>  
+        </div>  
+  
+        <div id="manualFirstRow" class="row">  
+        <div id="manualFirstRow" class="row">  
+          <span>先手方：</span>  
+          <label><input type="radio" name="manualFirst" value="r" checked> 紅方</label>  
+          <label><input type="radio" name="manualFirst" value="b"> 黑方</label>  
+          <label><input type="radio" name="manualFirst" value="b"> 黑方</label>  
+        </div>  
+  
+        <p class="hintText">  
+        <p class="hintText">  
+          暗棋：先手只決定「誰先行動」，顏色由第一顆翻出的棋決定。  [oai_citation:5‡darkchess.funtown.com.tw](https://darkchess.funtown.com.tw/rules2.html)  
+          暗棋：先手只決定「誰先行動」，顏色由第一顆翻出的棋決定。  [oai_citation:5‡darkchess.funtown.com.tw](https://darkchess.funtown.com.tw/rules2.html)  
+        </p>  
+        </p>  
+      </div>  
+  
+      <div class="panel">  
+      <div class="panel">  
+        <h2>6) 提示與音效</h2>  
+        <div class="row">  
+        <div class="row">  
+          <label><input type="checkbox" id="optMoveHints" checked> 棋步提示（預設開）</label>  
+          <label><input type="checkbox" id="optMoveHints" checked> 棋步提示（預設開）</label>  
+          <label><input type="checkbox" id="optDangerHints"> 危險區域提示（預設關）</label>  
+          <label><input type="checkbox" id="optDangerHints"> 危險區域提示（預設關）</label>  
+        </div>  
+        <div class="row">  
+          <label><input type="checkbox" id="optSound" checked> 音效（預設開）</label>  
+          <span class="hintText">瀏覽器需先有一次點擊/觸控後才能播放。</span>  
+          <span class="hintText">瀏覽器需先有一次點擊/觸控後才能播放。</span>  
+        </div>  
+      </div>  
+  
+      <div class="panel actions">  
+      <div class="panel actions">  
+        <button id="btnStart" class="primary">開始遊戲</button>  
+        <button id="btnClearSave" class="ghost">清除本機存檔</button>  
+        <button id="btnClearSave" class="ghost">清除本機存檔</button>  
+      </div>  
+      </div>  
+  
+      <footer class="footer">  
+        <p class="small">備註：本遊戲會使用 localStorage 存進度（僅本機）。</p>  
+        <p class="small">備註：本遊戲會使用 localStorage 存進度（僅本機）。</p>  
+      </footer>  
+      </footer>  
+    </section>  
+  
+    <!-- Game -->  
+    <!-- Game -->  
+    <section id="gameScreen" class="screen hidden">  
+    <section id="gameScreen" class="screen hidden">  
+      <header class="gameTop">  
+        <div class="left">  
+        <div class="left">  
+          <div id="statusLine" class="statusLine">狀態</div>  
+          <div id="subStatusLine" class="subStatusLine"></div>  
+        </div>  
+  
+        <div class="right">  
+        <div class="right">  
+          <button id="btnCheckWin" class="checkWin hidden">將軍！</button>  
+          <button id="btnCheckWin" class="checkWin hidden">將軍！</button>  
+          <button id="btnStopChain" class="primary hidden">結束連吃</button>  
+          <button id="btnUndo" class="ghost">悔棋</button>  
+          <button id="btnUndo" class="ghost">悔棋</button>  
+          <button id="btnRestart" class="ghost">重新開始</button>  
+          <button id="btnRestart" class="ghost">重新開始</button>  
+          <button id="btnToMenu" class="ghost">回主選單</button>  
+          <button id="btnToMenu" class="ghost">回主選單</button>  
+        </div>  
+      </header>  
+      </header>  
+  
+      <main class="gameMain">  
+        <div class="boardWrap">  
+          <div id="board" class="board vintage" aria-label="棋盤"></div>  
+        </div>  
+        </div>  
+  
+        <aside class="sidePanel">  
+        <aside class="sidePanel">  
+          <div class="panel">  
+          <div class="panel">  
+            <h3>遊戲內設定</h3>  
+  
+            <div class="row">  
+            <div class="row">  
+              <label class="toggle"><input type="checkbox" id="inSound"> 音效</label>  
+            </div>  
+            </div>  
+            <div class="row">  
+              <label class="toggle"><input type="checkbox" id="inMoveHints"> 棋步提示</label>  
+            </div>  
+            </div>  
+            <div class="row">  
+            <div class="row">  
+              <label class="toggle"><input type="checkbox" id="inDangerHints"> 危險區域提示</label>  
+              <label class="toggle"><input type="checkbox" id="inDangerHints"> 危險區域提示</label>  
+            </div>  
+            </div>  
+  
+            <hr/>  
+  
+            <div id="darkToggles" class="hidden">  
+            <div id="darkToggles" class="hidden">  
+              <div class="row">  
+              <div class="row">  
+                <label class="toggle"><input type="checkbox" id="inFogCapture"> 暗吃（可吃蓋牌）</label>  
+              </div>  
+              <div class="row">  
+              <div class="row">  
+                <label class="toggle"><input type="checkbox" id="inChainCapture"> 連吃（可連續吃子）</label>  
+                <label class="toggle"><input type="checkbox" id="inChainCapture"> 連吃（可連續吃子）</label>  
+              </div>  
+              </div>  
+              <div class="small" style="margin-top:8px;">  
+              <div class="small" style="margin-top:8px;">  
+                <b>連吃提示：</b>吃到相鄰棋且仍能繼續吃時，可繼續吃；也可隨時按「結束連吃」。  [oai_citation:6‡darkchess.funtown.com.tw](https://darkchess.funtown.com.tw/rules2.html)  
+              </div>  
+            </div>  
+          </div>  
+  
+          <div class="panel">  
+          <div class="panel">  
+            <h3>棋步紀錄</h3>  
+            <h3>棋步紀錄</h3>  
+            <div id="history" class="history"></div>  
+            <div id="history" class="history"></div>  
+          </div>  
+          </div>  
+        </aside>  
+        </aside>  
+      </main>  
+    </section>  
+  
+  </div>  
+  
+  <script src="main.js"></script>  
+  <script src="main.js"></script>  
+</body>  
+</html>  
+</html>  
